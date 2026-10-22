@@ -27,3 +27,6 @@ __pycache__/
 key_github
 
 key_github.pub
+sshkey
+sshkey.pub
+*.pem
