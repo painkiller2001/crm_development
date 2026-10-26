@@ -1,5 +1,5 @@
 from sqlalchemy.ext.asyncio import AsyncSession
-
+from sqlalchemy.future import select
 from .models import UserModel
 from .schemas import UserCreate
 
@@ -12,8 +12,9 @@ async def create_user(db: AsyncSession, new_user_data: UserCreate) -> UserModel:
     return db_new_user
 
 
-async def get_user(db: AsyncSession, ...):
-    ...
+async def get_user(db: AsyncSession, user_id: int):
+    user = await db.execute(select(UserModel).filter(UserModel.id == user_id))
+    return user
 
 
 async def get_users(db: AsyncSession, ...):
