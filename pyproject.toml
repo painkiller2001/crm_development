@@ -7,5 +7,6 @@ requires-python = ">=3.13"
 dependencies = [
     "fastapi[standard]>=0.159.1",
     "psycopg2-binary>=2.9.13",
+    "pytest>=9.1.1",
     "sqlalchemy>=2.1.6",
 ]
