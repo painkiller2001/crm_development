@@ -8,5 +8,6 @@ dependencies = [
     "fastapi[standard]>=0.159.1",
     "psycopg2-binary>=2.9.13",
     "pytest>=9.1.1",
+    "ruff>=0.17.2",
     "sqlalchemy>=2.1.6",
 ]
