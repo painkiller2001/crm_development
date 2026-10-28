@@ -1,29 +1,30 @@
 from fastapi import APIRouter, Depends
+from  .crud import
 
 
-router = APIRouter()
+router = APIRouter(prefix='/users')
 
 
-@router.post('/users/create')
+@router.post('/create')
 async def create_user():
     ...
 
 
-@router.get('/users/')
+@router.get('/')
 async def get_users():
     ...
 
 
-@router.get('/users/{id}')
+@router.get('/{id}')
 async def get_user(id: int):
     ...
 
 
-@router.put('/users/update/{id}')
+@router.put('/update/{id}')
 async def update_user(id: int):
     ...
 
 
-@router.post('/users/delete/{id}')
+@router.post('/delete/{id}')
 async def delete_user(id: int):
     ...
