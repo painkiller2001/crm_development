@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String
 from crm.core.database import Base
 
 
-class User(Base):
+class UserModel(Base):
     __tablename__ = 'users'
 
 
