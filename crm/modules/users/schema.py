@@ -1,4 +1,3 @@
-from .models import UserModel
 from pydantic import BaseModel
 
 

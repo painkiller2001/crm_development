@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
-from .crud import get_user, get_users, delete_user
+
 from crm.core.database import get_db
 
+from .crud import get_user, get_users
 
 router = APIRouter(prefix='/users')
 

@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+
 from crm.modules.users.routers import router as users_router
 
 app = FastAPI(title="CRM System")
