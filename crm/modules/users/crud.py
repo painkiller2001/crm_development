@@ -21,8 +21,8 @@ async def get_users(db: AsyncSession) -> list[UserModel]:
     users = await db.execute(select(UserModel))
     return users.scalars().first
 
-async def update_user(db: AsyncSession):
-    ...
+async def update_user(db: AsyncSession, user_id: int):
+    user = async db.execute9select(UserModel).filter(UserModel.id == user_id)
 
 
 async def delete_user(db: AsyncSession, user_id: int) -> None:
