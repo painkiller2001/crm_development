@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from crm.core.database import get_db
 
-from .crud import get_user, get_users
+from .crud import get_user, get_users, delete_user
 
 router = APIRouter(prefix='/users')
 
@@ -36,13 +36,14 @@ async def update_user(id: int):
     ...
 
 
-# @router.post('/delete/{id}')
-# async def delete_user(id: int, db: AsyncSession = Depends(get_db)):
-#     user = await get_user(db=db, user_id=id)
+@router.delete('/delete/{id}')
+async def delete_user(id: int, db: AsyncSession = Depends(get_db)):
+    user = await get_user(db=db, user_id=id)
 
-#     if user:
-#         return None
-#     else:
-#         raise HTTPException(
-#             status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
-#         )
+    if user:
+        await crud.delete_user(db=db, user_id=id)
+        return None
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
+        )
