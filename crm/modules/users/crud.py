@@ -19,10 +19,17 @@ async def get_user(db: AsyncSession, user_id: int) -> UserModel | None:
 
 async def get_users(db: AsyncSession) -> list[UserModel]:
     users = await db.execute(select(UserModel))
-    return users.scalars().first
+    return users.scalars().all()
 
-async def update_user(db: AsyncSession, user_id: int):
-    user = async db.execute9select(UserModel).filter(UserModel.id == user_id)
+async def update_user(db: AsyncSession, user_id: int, new_user_data: UserCreate):
+    user = await db.execute9select(UserModel).filter(UserModel.id == user_id)
+    db_user = user.scalars().first()
+    
+    ...
+    await db.commit()
+    await db.refresh(db_user)
+    
+    return db_user
 
 
 async def delete_user(db: AsyncSession, user_id: int) -> None:
