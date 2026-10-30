@@ -2,9 +2,9 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from crm.core.database import get_db
-
 from crm.modules.users import crud
-from .schema import UserUpdate, UserCreate
+
+from .schema import UserCreate, UserUpdate
 
 router = APIRouter(prefix='/users')
 
@@ -52,7 +52,7 @@ async def delete_user(id: int, db: AsyncSession = Depends(get_db)):
 
     if user:
         await crud.delete_user(db=db, user_id=id)
-        return None
+        return
     else:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
