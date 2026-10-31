@@ -20,6 +20,6 @@ class CustomerRead(CustomerBase):
 class CustomerUpdate(BaseModel):
     name : str | None = None
     phone : str | None = None
-    email : str | None = None
+    email : EmailStr | None = None
     website : str | None = None
     address : str | None = None

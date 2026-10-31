@@ -12,6 +12,7 @@ class UserModel(Base):
     last_name = Column(String, nullable=False)
     role = Column(String, nullable=False)
     department = Column(String, nullable=False)
+    email = Column(String, nullable=False, unique=True)
 
     def get_username(self):
         return f'{self.first_name}_{self.last_name}'
