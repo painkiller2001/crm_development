@@ -24,7 +24,21 @@ async def get_customers(db: AsyncSession) -> list[CustomerModel] | None:
 
 
 async def update_customer(db: AsyncSession, customer_id: int, new_customer_data: CustomerUpdate) -> CustomerModel | None:
-    ...
+    customer = await db.execute(select(CustomerModel).filter(CustomerModel.id == customer_id))
+    db_customer = customer.scalars.first()
+
+    if not db_customer:
+        return None
+
+    updated_customer = new_customer_data.model_dump(exclude_unset=True)
+
+    for field, data in update_customer.items():
+        setattr(db_customer, field, data) 
+
+    await db.commit()
+    await db.refresh(db_customer)
+    
+    return db_customer
 
 
 async def delete_customer(db: AsyncSession, customer_id: int) -> None:
