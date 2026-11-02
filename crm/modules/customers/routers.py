@@ -17,8 +17,15 @@ async def create_customer(new_customer_data: CustomerCreate, db: AsyncSession = 
 
 
 @router.get('/')
-async def get_customers():
-    ...
+async def get_customers(db: AsyncSession = Depends(get_db)):
+    customers = await crud.get_user(db=db)
+
+    if customers:
+        return customers
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
+        )
 
 
 @router.get('/{id}/customer/')
