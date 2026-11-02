@@ -18,9 +18,11 @@ async def get_customers(db: AsyncSession) -> list[CustomerModel] | None:
     ...
 
 
-async def update_customer(db: AsyncSession, id: int, new_customer_data: CustomerUpdate) -> CustomerModel | None:
+async def update_customer(db: AsyncSession, customer_id: int, new_customer_data: CustomerUpdate) -> CustomerModel | None:
     ...
 
 
-async def delete_customer(db: AsyncSession, id: int) -> None:
-    ...
+async def delete_customer(db: AsyncSession, customer_id: int) -> None:
+    customer = await db.execute(select(CustomerModel).filter(CustomerModel.id == id))
+    db.delete(customer.scalars().first())
+    await db.commit()
