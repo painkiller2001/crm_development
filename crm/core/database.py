@@ -1,17 +1,24 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import declarative_base, sessionmaker
+import os
+from dotenv import load_dotenv
 
-DATABASE_URL = "postgresql://user:password@localhost/dbname"
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
+from sqlalchemy.orm import declarative_base
 
 
-engine = create_engine(DATABASE_URL)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+DATABASE_URL = os.getenv(
+    "DATABASE_URL", "postgresql://user:password@localhost/dbname"
+    )
+
+
+
+engine = create_async_engine(DATABASE_URL)
+AsyncSessionLocal = async_sessionmaker(expire_on_commit=False, class_=AsyncSession, bind=engine)
 Base = declarative_base()
 
 
-def get_db():
-    db = SessionLocal()
+async def get_db():
+    db = AsyncSessionLocal()
     try:
         yield db
     finally:
-        db.close()
+        await db.close()
