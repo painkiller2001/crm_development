@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from crm.core.database import get_db
-from crm.modules.users import crud
+from crm.modules.customers import crud
 
 from .schema import CustomerCreate, CustomerUpdate
 
@@ -12,32 +12,48 @@ router = APIRouter(prefix='/customers')
 
 @router.post('/create/')
 async def create_customer(new_customer_data: CustomerCreate, db: AsyncSession = Depends(get_db)):
-    new_customer = await crud.create_user(db=db, new_customer_data=new_customer_data)
+    new_customer = await crud.create_customer(db=db, new_customer_data=new_customer_data)
     return new_customer
 
 
 @router.get('/')
 async def get_customers(db: AsyncSession = Depends(get_db)):
-    customers = await crud.get_user(db=db)
-
-    if customers:
-        return customers
-    else:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
-        )
+    customers = await crud.get_customers(db=db)
+    return customers
 
 
 @router.get('/{id}/customer/')
-async def get_customer():
-    ...
+async def get_customer(id: int, db: AsyncSession = Depends(get_db)):
+    customer = await crud.get_customer(db=db, customer_id=id)
+
+    if customer:
+        return customer
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Customer not found"
+        )
 
 
-@router.put('')
-async def update_customer():
-    ...
+@router.put('/{id}/update/')
+async def update_customer(new_customer_data: CustomerUpdate, id: int, db: AsyncSession = Depends(get_db)):
+    updated_customer = await crud.update_customer(db=db, new_customer_data=new_customer_data, customer_id=id)
+
+    if updated_customer:
+        return updated_customer
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Customer not found"
+        )
 
 
-@router.delete('')
-async def delete_customer():
-    ...
+@router.delete('/{id}/delete/')
+async def delete_customer(id: int, db: AsyncSession = Depends(get_db)):
+    customer = await crud.get_customer(customer_id=id, db=db)
+
+    if customer:
+        await crud.delete_customer(customer_id=id, db=db)
+        return
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Customer not found"
+        )
