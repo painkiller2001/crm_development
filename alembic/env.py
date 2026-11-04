@@ -1,3 +1,6 @@
+import os
+from dotenv import load_dotenv
+
 import asyncio
 from logging.config import fileConfig
 
@@ -10,7 +13,15 @@ from crm.core.database import Base
 from crm.modules.users.models import UserModel
 from crm.modules.customers.models import CustomerModel
 
+
+load_dotenv()
+
+database_url = os.getenv("DATABASE_URL")
+
+
 config = context.config
+
+config.set_main_option("sqlalchemy.url", database_url.replace("%", "%%"))
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
