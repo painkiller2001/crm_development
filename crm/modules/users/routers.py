@@ -6,6 +6,7 @@ from crm.modules.users import crud
 
 from .schema import UserCreate, UserUpdate
 
+
 router = APIRouter(prefix='/users')
 
 
@@ -33,7 +34,7 @@ async def get_user(id: int, db: AsyncSession = Depends(get_db)):
         )
 
 
-@router.put('/update/{id}')
+@router.put('/{id}/update')
 async def update_user(id: int, new_user_data: UserUpdate, db: AsyncSession = Depends(get_db)):
     
     updated_user = await crud.update_user(db=db, user_id=id, new_user_data=new_user_data)
@@ -46,7 +47,7 @@ async def update_user(id: int, new_user_data: UserUpdate, db: AsyncSession = Dep
         )
 
 
-@router.delete('/delete/{id}')
+@router.delete('/{id}/delete')
 async def delete_user(id: int, db: AsyncSession = Depends(get_db)):
     user = await crud.get_user(db=db, user_id=id)
 
