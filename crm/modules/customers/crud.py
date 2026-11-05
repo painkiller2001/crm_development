@@ -43,5 +43,5 @@ async def update_customer(db: AsyncSession, customer_id: int, new_customer_data:
 
 async def delete_customer(db: AsyncSession, customer_id: int) -> None:
     customer = await db.execute(select(CustomerModel).filter(CustomerModel.id == customer_id))
-    db.delete(customer.scalars().first())
+    await db.delete(customer.scalars().first())
     await db.commit()
