@@ -43,5 +43,5 @@ async def update_user(db: AsyncSession, user_id: int, new_user_data: UserUpdate)
 
 async def delete_user(db: AsyncSession, user_id: int) -> None:
     user = await db.execute(select(UserModel).filter(UserModel.id == user_id))
-    db.delete(user.scalars().first())
+    await db.delete(user.scalars().first())
     await db.commit()
