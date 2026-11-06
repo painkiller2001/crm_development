@@ -5,6 +5,7 @@ from crm.core.database import Base
 
 
 class CustomerModel(Base):
+    
     __tablename__ = 'customers'
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)

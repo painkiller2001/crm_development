@@ -1,17 +1,18 @@
-from sqlalchemy import Column, Integer, String, DateTime, func
+from sqlalchemy import Column, Integer, DateTime, func
 from crm.core.database import Base
 from sqlalchemy.orm import Mapped, mapped_column
+from datetime import datetime
 
 
 class Deal(Base):
 
     __tablename__ = 'deals'
 
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, nullable=False)
-    customer = Column(String, nullable=False) # -> FK customer
-    responsible = Column(String, nullable=False) # -> FK users
-    created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
-    price = Column(Integer, nullable=False)
-    stage = Column(String, nullable=False) # -> ENUM
-    description = Column(String, nullable=True)
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    name: Mapped[str] = mapped_column(nullable=False)
+    customer: Mapped[str] = mapped_column(nullable=False) # -> FK customer
+    responsible: Mapped[str] = mapped_column(nullable=False) # -> FK users
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    price: Mapped[int] = mapped_column(Integer, nullable=False)
+    stage: Mapped[str] = mapped_column(nullable=False) # -> ENUM
+    description: Mapped[str] = mapped_column(nullable=True)
