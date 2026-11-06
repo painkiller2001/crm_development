@@ -7,10 +7,10 @@ from crm.core.database import Base
 class CustomerModel(Base):
     __tablename__ = 'customers'
 
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, nullable=False)
-    phone = Column(String, nullable=False, unique=True)
-    email = Column(String, nullable=False, unique=True)
-    website = Column(String, nullable=True)
-    address = Column(String, nullable=False)
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    name: Mapped[str] = mapped_column(nullable=False)
+    phone: Mapped[str] = mapped_column(nullable=False, unique=True)
+    email: Mapped[str] = mapped_column(nullable=False, unique=True)
+    website: Mapped[str] = mapped_column(nullable=True)
+    address: Mapped[str] = mapped_column(nullable=False)
     # responsible = ... # -> FK users
