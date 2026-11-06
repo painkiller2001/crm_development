@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, DateTime, func
 from crm.core.database import Base
+from sqlalchemy.orm import Mapped, mapped_column
 
 
 class Deal(Base):
@@ -8,9 +9,9 @@ class Deal(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, nullable=False)
-    customer = Column(String, nullable=False) # -> FK
-    responsible = Column(String, nullable=False) # -> FK
+    customer = Column(String, nullable=False) # -> FK customer
+    responsible = Column(String, nullable=False) # -> FK users
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     price = Column(Integer, nullable=False)
-    stage = Column(String, nullable=False) # -> FK
+    stage = Column(String, nullable=False) # -> ENUM
     description = Column(String, nullable=True)

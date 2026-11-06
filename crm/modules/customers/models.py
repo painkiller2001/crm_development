@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String
+from sqlalchemy.orm import Mapped, mapped_column
 
 from crm.core.database import Base
 
@@ -12,3 +13,4 @@ class CustomerModel(Base):
     email = Column(String, nullable=False, unique=True)
     website = Column(String, nullable=True)
     address = Column(String, nullable=False)
+    # responsible = ... # -> FK users
