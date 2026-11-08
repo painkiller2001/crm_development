@@ -22,8 +22,8 @@ async def get_users(db: AsyncSession = Depends(get_db)):
 
 
 @router.get('/{id}')
-async def get_user(id: int, db: AsyncSession = Depends(get_db)):
-    user = await crud.get_user(db=db, user_id=id)
+async def get_user(user_id: int, db: AsyncSession = Depends(get_db)):
+    user = await crud.get_user(db=db, user_id=user_id)
 
     if user:
         return user
@@ -34,9 +34,9 @@ async def get_user(id: int, db: AsyncSession = Depends(get_db)):
 
 
 @router.put('/{id}/update')
-async def update_user(id: int, new_user_data: UserUpdate, db: AsyncSession = Depends(get_db)):
+async def update_user(user_id: int, new_user_data: UserUpdate, db: AsyncSession = Depends(get_db)):
     
-    updated_user = await crud.update_user(db=db, user_id=id, new_user_data=new_user_data)
+    updated_user = await crud.update_user(db=db, user_id=user_id, new_user_data=new_user_data)
 
     if updated_user:
         return update_user
@@ -47,11 +47,11 @@ async def update_user(id: int, new_user_data: UserUpdate, db: AsyncSession = Dep
 
 
 @router.delete('/{id}/delete')
-async def delete_user(id: int, db: AsyncSession = Depends(get_db)):
-    user = await crud.get_user(db=db, user_id=id)
+async def delete_user(user_id: int, db: AsyncSession = Depends(get_db)):
+    user = await crud.get_user(db=db, user_id=user_id)
 
     if user:
-        await crud.delete_user(db=db, user_id=id)
+        await crud.delete_user(db=db, user_id=user_id)
         return
     else:
         raise HTTPException(
