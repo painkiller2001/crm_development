@@ -1,18 +1,14 @@
-import os
-from dotenv import load_dotenv
-
 import asyncio
+import os
 from logging.config import fileConfig
 
-from alembic import context
+from dotenv import load_dotenv
 from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
+from alembic import context
 from crm.core.database import Base
-from crm.modules.users.models import UserModel
-from crm.modules.customers.models import CustomerModel
-
 
 load_dotenv()
 

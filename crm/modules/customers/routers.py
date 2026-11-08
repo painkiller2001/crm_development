@@ -6,7 +6,6 @@ from crm.modules.customers import crud
 
 from .schema import CustomerCreate, CustomerUpdate
 
-
 router = APIRouter(prefix='/customers')
 
 

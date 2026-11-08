@@ -6,7 +6,6 @@ from crm.modules.users import crud
 
 from .schema import UserCreate, UserUpdate
 
-
 router = APIRouter(prefix='/users')
 
 
