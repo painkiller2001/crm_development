@@ -41,4 +41,6 @@ async def update_deal(new_deal_data: DealCreate, deal_id: int, db: AsyncSession)
 
 
 async def delete_deal(deal_id: int, db: AsyncSession) -> None:
-    ...
+    deal = await db.execute(select(DealModel().filter(DealModel.id == deal_id)))
+    await db.delete(deal.scalars().first())
+    await db.commit()
