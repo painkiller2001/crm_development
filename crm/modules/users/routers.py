@@ -6,7 +6,7 @@ from crm.modules.users import crud
 
 from .schema import UserCreate, UserUpdate
 
-router = APIRouter(prefix='/users')
+router = APIRouter(prefix='/users', tags=["Users"])
 
 
 @router.post('/create')

@@ -6,7 +6,7 @@ from crm.modules.customers import crud
 
 from .schema import CustomerCreate, CustomerUpdate
 
-router = APIRouter(prefix='/customers')
+router = APIRouter(prefix='/customers', tags=["Customers"])
 
 
 @router.post('/create/')
