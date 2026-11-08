@@ -18,6 +18,7 @@ async def get_deal(deal_id: int, db: AsyncSession) -> DealModel | None:
     deal = await db.execute(select(DealModel().filter(DealModel.id == deal_id)))
     return deal.scalars().first()
 
+
 async def get_deals(db: AsyncSession) -> list[DealModel]:
     deals = await db.execute(select(DealModel))
     return deals.scalars().all()
@@ -34,8 +35,8 @@ async def update_deal(new_deal_data: DealCreate, deal_id: int, db: AsyncSession)
         for field, value in params.items():
             setattr(db_deal, field, value)
 
-    db.commit()
-    db.refre(db_deal)
+    await db.commit()
+    await db.refresh(db_deal)
 
     return db_deal
 

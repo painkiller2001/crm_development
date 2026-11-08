@@ -23,7 +23,7 @@ async def get_deal(deal_id: int, db: AsyncSession = Depends(get_db)):
         return deal
     else:
         raise HTTPException(
-            staus_code=status.HTTP_404_NOT_FOUND, detail='Deal not found'
+            status_code=status.HTTP_404_NOT_FOUND, detail='Deal not found'
         )
 
 
@@ -41,17 +41,18 @@ async def update_deal(new_deal_data: DealUpdate, deal_id: int, db: AsyncSession 
         return deal
     else:
         raise HTTPException(
-            staus_code=status.HTTP_404_NOT_FOUND, detail='Deal not found'
+            status_code=status.HTTP_404_NOT_FOUND, detail='Deal not found'
         )
 
 
 @router.delete('/{id}/delete')
 async def delete_deal(deal_id: int, db: AsyncSession = Depends(get_db)):
-    deal = await crud.delete_deal(deal_id=deal_id, db=db)
+    deal = await crud.get_deal(deal_id=deal_id, db=db)
 
     if deal:
+        await crud.delete_user(db=db, deal_id=deal_id)
         return
     else:
         raise HTTPException(
-            staus_code=status.HTTP_404_NOT_FOUND, detail='Deal not found'
+            status_code=status.HTTP_404_NOT_FOUND, detail='Deal not found'
         )
