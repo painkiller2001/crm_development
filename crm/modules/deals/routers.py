@@ -10,26 +10,26 @@ from .schema import DealCreate, DealUpdate
 router = APIRouter(prefix='/deals')
 
 
-@router.get('/{id}/')
-async def get_deal():
+@router.post('/create')
+async def create_deal(new_deal_data: DealCreate, db: AsyncSession = Depends(get_db)):
+    ...
+
+
+@router.get('/{id}')
+async def get_deal(id: int, db: AsyncSession = Depends(get_db)):
     ...
 
 
 @router.get('/')
-async def get_deals():
-    ...
-
-
-@router.post('/create_deal/')
-async def create_deal():
+async def get_deals(db: AsyncSession = Depends(get_db)):
     ...
 
 
 @router.put('/{id}/update')
-async def update_deal():
+async def update_deal(new_deal_data: DealUpdate, id: int, db: AsyncSession = Depends(get_db)):
     ...
 
 
 @router.delete('/{id}/delete')
-async def delete_deal():
+async def delete_deal(id: int, db: AsyncSession = Depends(get_db)):
     ...
