@@ -23,8 +23,21 @@ async def get_deals(db: AsyncSession) -> list[DealModel]:
     return deals.scalars().all()
 
 
-async def update_deal(deal_id: int, db: AsyncSession) -> DealModel | None:
-    ...
+async def update_deal(new_deal_data: DealCreate, deal_id: int, db: AsyncSession) -> DealModel | None:
+    deal = await db.execute(select(DealModel().filter(DealModel.id == deal_id)))
+    db_deal = deal.scalars.first()
+
+    if not db_deal:
+        return None
+    else:
+        params = new_deal_data.model_dumps(exclude_unset=True)
+        for field, value in params.items():
+            setattr(db_deal, field, value)
+
+    db.commit()
+    db.refre(db_deal)
+
+    return db_deal
 
 
 async def delete_deal(deal_id: int, db: AsyncSession) -> None:
