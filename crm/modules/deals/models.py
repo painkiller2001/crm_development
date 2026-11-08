@@ -4,7 +4,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 from datetime import datetime
 
 
-class Deal(Base):
+class DealModel(Base):
 
     __tablename__ = 'deals'
 
@@ -15,4 +15,4 @@ class Deal(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     price: Mapped[int] = mapped_column(Integer, nullable=False)
     stage: Mapped[str] = mapped_column(nullable=False) # -> ENUM
-    description: Mapped[str] = mapped_column(nullable=True)
+    description: Mapped[str | None] = mapped_column(nullable=True)
