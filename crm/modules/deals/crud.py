@@ -1,4 +1,4 @@
-from sqlalchemy import AsyncSession
+from sqlalchemy.ext.asyncio import AsyncSession
 from crm.modules.deals.models import DealModel
 
 from sqlalchemy.future import select
@@ -7,7 +7,7 @@ from crm.modules.deals.schema import DealCreate
 
 
 async def create_deal(new_deal_data: DealCreate, db: AsyncSession) -> DealModel:
-    new_deal = DealCreate(**new_deal_data.model_dump())
+    new_deal = DealModel(**new_deal_data.model_dump())
     db.add(new_deal)
     await db.commit()
     await db.refresh(new_deal)
