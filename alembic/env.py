@@ -1,40 +1,44 @@
-import asyncio
 import os
+import sys
+from dotenv import load_dotenv
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+import asyncio
 from logging.config import fileConfig
 
-from dotenv import load_dotenv
+from alembic import context
 from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
-from alembic import context
 from crm.core.database import Base
+from crm.modules.users.models import UserModel
+from crm.modules.customers.models import CustomerModel
+from crm.modules.deals.models import DealModel
+
+Base.registry.configure()
+
+target_metadata = Base.metadata
 
 load_dotenv()
-
 database_url = os.getenv("DATABASE_URL")
 
-
 config = context.config
-
 config.set_main_option("sqlalchemy.url", database_url.replace("%", "%%"))
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-target_metadata = Base.metadata
-
 
 def run_migrations_offline() -> None:
     url = config.get_main_option("sqlalchemy.url")
-
     context.configure(
         url=url,
         target_metadata=target_metadata,
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
     )
-
     with context.begin_transaction():
         context.run_migrations()
 
@@ -44,7 +48,6 @@ def do_run_migrations(connection: Connection) -> None:
         connection=connection,
         target_metadata=target_metadata,
     )
-
     with context.begin_transaction():
         context.run_migrations()
 
@@ -55,10 +58,8 @@ async def run_async_migrations() -> None:
         prefix="sqlalchemy.",
         poolclass=pool.NullPool,
     )
-
     async with connectable.connect() as connection:
         await connection.run_sync(do_run_migrations)
-
     await connectable.dispose()
 
 
