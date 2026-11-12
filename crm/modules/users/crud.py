@@ -4,9 +4,18 @@ from sqlalchemy.future import select
 from .models import UserModel
 from .schema import UserCreate, UserUpdate
 
+from crm.core.security import get_password_hash
+
 
 async def create_user(db: AsyncSession, new_user_data: UserCreate) -> UserModel:
-    db_new_user = UserModel(**new_user_data.model_dump())
+
+    user_data = new_user_data.model_dump()
+
+    password = user_data.pop("password")
+    hashed_password = get_password_hash(password)
+    user_data["hashed_password"] = hashed_password
+
+    db_new_user = UserModel(**user_data)
     db.add(db_new_user)
     await db.commit()
     await db.refresh(db_new_user)
