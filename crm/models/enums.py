@@ -10,3 +10,10 @@ class Department(str, Enum):
     SALES = "sales"
     SUPPORT = "support"
     DEV = "dev"
+
+
+class DealStatus(str, Enum):
+    DRAFT = "draft"
+    NEGOTIATIONS = "negotiations"
+    SIGNED = "signed"
+    CLOSED = "closed"
