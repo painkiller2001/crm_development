@@ -13,6 +13,7 @@ class UserModel(Base):
     role: Mapped[str] = mapped_column(nullable=False) # -> ENUM
     department: Mapped[str] = mapped_column(nullable=False) # -> ENUM
     email: Mapped[str] = mapped_column(nullable=False, unique=True)
+    hashed_password: Mapped[str] = mapped_column(nullable=False)
 
     def get_username(self):
         return f'{self.first_name}_{self.last_name}'
