@@ -1,6 +1,14 @@
+from fastapi import Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.future import select
+
 from datetime import datetime, timedelta
 from passlib.context import CryptContext
 import jwt
+
+from crm.core.database import get_db
+from crm.modules.users.models import UserModel
 
 
 SECRET_KEY = ... # .env
@@ -9,6 +17,7 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="users/login")
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
@@ -26,3 +35,7 @@ def create_access_token(data: dict) -> str:
     
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
+
+
+async def get_current_user():
+    ...
