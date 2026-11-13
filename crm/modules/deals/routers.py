@@ -2,11 +2,12 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from crm.core.database import get_db
+from crm.core.security import get_current_user
 from crm.modules.deals import crud
 
 from .schema import DealCreate, DealUpdate
 
-router = APIRouter(prefix='/deals', tags=["Deals"])
+router = APIRouter(prefix='/deals', tags=["Deals"], dependencies=[Depends(get_current_user)])
 
 
 @router.post('/create')

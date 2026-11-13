@@ -2,11 +2,12 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from crm.core.database import get_db
+from crm.core.security import get_current_user
 from crm.modules.customers import crud
 
 from .schema import CustomerCreate, CustomerUpdate
 
-router = APIRouter(prefix='/customers', tags=["Customers"])
+router = APIRouter(prefix='/customers', tags=["Customers"], dependencies=[Depends(get_current_user)])
 
 
 @router.post('/create/')
