@@ -10,8 +10,13 @@ import jwt
 from crm.core.database import get_db
 from crm.modules.users.models import UserModel
 
+import os
+from dotenv import load_dotenv
 
-SECRET_KEY = ... # .env
+load_dotenv()
+
+
+SECRET_KEY = os.getenv("SECRET_KEY", "default_secret_key") 
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
