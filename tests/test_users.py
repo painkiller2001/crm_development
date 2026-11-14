@@ -20,6 +20,8 @@ async def test_create_user(async_client: AsyncClient):
     data = response.json()
     assert data["email"] == user_data["email"]
     assert data["first_name"] == user_data["first_name"]
+    assert "password" not in data
+    assert "hashed_password" not in data
 
 
 @pytest.mark.asyncio
