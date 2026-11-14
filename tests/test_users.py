@@ -20,3 +20,18 @@ async def test_create_user(async_client: AsyncClient):
     data = response.json()
     assert data["email"] == user_data["email"]
     assert data["first_name"] == user_data["first_name"]
+
+
+@pytest.mark.asyncio
+async def test_read_user(async_client: AsyncClient):
+    ...
+
+
+@pytest.mark.asyncio
+async def test_update_user(async_client: AsyncClient):
+    ...
+
+
+@pytest.mark.asyncio
+async def test_delete_user(async_client: AsyncClient):
+    ...
