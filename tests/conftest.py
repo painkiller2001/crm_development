@@ -1,4 +1,4 @@
-from crm.main import app as application
+from main import app as application
 import pytest
 
 from httpx import AsyncClient
