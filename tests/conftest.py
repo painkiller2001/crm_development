@@ -1,8 +1,7 @@
-from main import app as application
 import pytest
+from httpx import ASGITransport, AsyncClient
 
-from httpx import AsyncClient, ASGITransport
-
+from main import app as application
 
 BASE_URL = "http://test"
 

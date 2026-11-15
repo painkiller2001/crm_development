@@ -1,17 +1,16 @@
+import os
+from datetime import datetime, timedelta
+
+import jwt
+from dotenv import load_dotenv
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
+from passlib.context import CryptContext
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
-from datetime import datetime, timedelta
-from passlib.context import CryptContext
-import jwt
-
 from crm.core.database import get_db
 from crm.modules.users.models import UserModel
-
-import os
-from dotenv import load_dotenv
 
 load_dotenv()
 
