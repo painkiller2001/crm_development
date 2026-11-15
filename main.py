@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 
-from crm.modules.users.auth_router import router as auth_router
-from crm.modules.users.routers import router as users_router
 from crm.modules.customers.routers import router as customers_router
 from crm.modules.deals.routers import router as deals_router
+from crm.modules.users.auth_router import router as auth_router
+from crm.modules.users.routers import router as users_router
 
 app = FastAPI(title="CRM System")
 
