@@ -1,10 +1,10 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
+from crm.core.security import get_password_hash
+
 from .models import UserModel
 from .schema import UserCreate, UserUpdate
-
-from crm.core.security import get_password_hash
 
 
 async def create_user(db: AsyncSession, new_user_data: UserCreate) -> UserModel:

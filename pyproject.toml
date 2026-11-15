@@ -10,6 +10,7 @@ dependencies = [
     "asyncpg>=0.32.0",
     "fastapi[standard]>=0.159.1",
     "httpx>=0.28.1",
+    "make>=0.1.6.post2",
     "passlib[bcrypt]>=1.7.4",
     "psycopg2-binary>=2.9.13",
     "psycopg[binary]>=3.3.6",
@@ -19,3 +20,9 @@ dependencies = [
     "ruff>=0.17.2",
     "sqlalchemy[asyncio]>=2.1.6",
 ]
+
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+pythonpath = ["."]

@@ -1,8 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
-from crm.modules.deals.models import DealModel
-
 from sqlalchemy.future import select
 
+from crm.modules.deals.models import DealModel
 from crm.modules.deals.schema import DealCreate
 
 
