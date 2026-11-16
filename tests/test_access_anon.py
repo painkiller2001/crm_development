@@ -42,9 +42,11 @@ async def test_read_customer_anon(async_client: AsyncClient, test_customer: dict
     assert response.status_code == 401
 
 
-# @pytest.mark.asyncio
-# async def test_update_customer_anon():
-#     ...
+@pytest.mark.asyncio
+async def test_update_customer_anon(async_client: AsyncClient, test_customer: dict):
+    customer_id = test_customer.id
+    response = await async_client.put(f"/customers/{customer_id}/update/")
+    assert response.status_code == 401
 
 
 # @pytest.mark.asyncio
