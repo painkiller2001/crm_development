@@ -22,9 +22,11 @@ async def test_update_user_anon(async_client: AsyncClient, test_user: dict):
     assert response.status_code == 401
 
 
-# @pytest.mark.asyncio
-# async def test_delete_user_anon():
-#     ...
+@pytest.mark.asyncio
+async def test_delete_user_anon(async_client: AsyncClient, test_user: dict):
+    user_id = test_user['id']
+    response = await async_client.delete(f"/users/{user_id}/delete")
+    assert response.status_code == 401
 
 
 # @pytest.mark.asyncio
