@@ -29,9 +29,10 @@ async def test_delete_user_anon(async_client: AsyncClient, test_user: dict):
     assert response.status_code == 401
 
 
-# @pytest.mark.asyncio
-# async def test_create_customer_anon():
-#     ...
+@pytest.mark.asyncio
+async def test_create_customer_anon(async_client: AsyncClient):
+    response = await async_client.post("/customers/create/")
+    assert response.status_code == 401 
 
 
 # @pytest.mark.asyncio
