@@ -5,7 +5,9 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_asyn
 from crm.core.database import Base, get_db
 from main import app as application
 from crm.modules.customers import crud as customer_crud
+from crm.modules.deals import crud as deal_crud
 from crm.modules.customers.schema import CustomerCreate
+from crm.modules.deals.schema import DealCreate
 
 
 TEST_BASE_URL = "sqlite+aiosqlite:///:memory:"
@@ -88,3 +90,16 @@ async def test_customer(db_session: AsyncSession):
         address="Test St., Test State",
     )
     return await customer_crud.create_customer(db=db_session, new_customer_data=customer_data)
+
+
+@pytest.fixture
+async def test_deal(db_session: AsyncSession, test_customer, test_user: dict):
+    deal_data = DealCreate(
+        name="Test deal",
+        customer_id=test_customer.id",
+        responsible_id=test_user["id"]",
+        price="100000",
+        stage="Draft",
+        description="Test desc for deal",
+    )
+    return await deal_crud.create_deal(db=db_session, new_deal_data=deal_data)
