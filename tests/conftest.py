@@ -13,14 +13,6 @@ engine_test = create_async_engine(TEST_BASE_URL, echo=False)
 TestingSessionLocal = async_sessionmaker(expire_on_commit=False, class_=AsyncSession, bind=engine_test)
 
 
-async def override_get_db():
-    async with TestingSessionLocal() as session:
-        yield session
-
-
-application.dependency_overrides[get_db] = override_get_db
-
-
 @pytest.fixture(autouse=True)
 async def setup_test_db():
     async with engine_test.begin() as conn:
@@ -73,16 +65,17 @@ async def test_user(async_client: AsyncClient):
 
 
 @pytest.fixture
-async def auth_client(async_client: AsyncClient, test_user: dict):
-    login_data = {
-        "username": test_user["email"],
-        "password": test_user["password"],
-    }
-    response = await async_client.post("/login", data=login_data)
-    token = response.json()["access_token"]
-    async_client.headers.update({"Authorization": f"Bearer {token}"})
-    yield async_client
-    async_client.headers.pop("Authorization", None)
+async def auth_client(test_user: dict):
+    transport = ASGITransport(app=application)
+    async with AsyncClient(transport=transport, base_url=BASE_URL) as client:
+        login_data = {
+            "username": test_user["email"],
+            "password": test_user["password"],
+        }
+        response = await client.post("/login", data=login_data)
+        token = response.json()["access_token"]
+        client.headers.update({"Authorization": f"Bearer {token}"})
+        yield client
 
 
 @pytest.fixture
@@ -91,7 +84,7 @@ async def test_customer(db_session: AsyncSession):
         name="Test LLC",
         phone="123 563 (324)",
         email="test_customer@test.com",
-        website="://testllc.com",
+        website="testcustomer.com",
         address="Test St., Test State",
     )
     return await customer_crud.create_customer(db=db_session, new_customer_data=customer_data)
