@@ -56,8 +56,15 @@ async def test_user(async_client: AsyncClient):
 
 @pytest.fixture
 async def auth_client(async_client: AsyncClient, test_user: dict):
-    ...
-
+    login_data = {
+        "username": test_user["email"],
+        "password": test_user["password"],
+    }
+    response = await async_client.post("/login", data=login_data)
+    token = response.json()["access_token"]
+    async_client.headers.update({"Authorization": f"Bearer {token}"})
+    yield async_client
+    async_client.headers.pop("Authorization", None)
 
 @pytest.fixture
 async def test_customer(async_client: AsyncClient):
