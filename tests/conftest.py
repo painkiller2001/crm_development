@@ -4,6 +4,8 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_asyn
 
 from crm.core.database import Base, get_db
 from main import app as application
+from crm.modules.customers import crud as customer_crud
+from crm.modules.customers.schema import CustomerCreate
 
 
 TEST_BASE_URL = "sqlite+aiosqlite:///:memory:"
@@ -83,15 +85,13 @@ async def auth_client(async_client: AsyncClient, test_user: dict):
     async_client.headers.pop("Authorization", None)
 
 
-# @pytest.fixture
-# async def test_customer(async_client: AsyncClient, auth_client: dict):
-#     customer_data = {
-#         "name": "Test LLC",
-#         "phone": "123 563 (324)",
-#         "email": "test_customer@test.com",
-#         "website": "www.testllc.com",
-#         "address": "Test St., Test State",
-#     }
-#     response = await async_client.post("/customers/create", json=customer_data)
-#     customer = response.json()
-#     return customer
+@pytest.fixture
+async def test_customer(db_session: AsyncSession):
+    customer_data = CustomerCreate(
+        name="Test LLC",
+        phone="123 563 (324)",
+        email="test_customer@test.com",
+        website="://testllc.com",
+        address="Test St., Test State",
+    )
+    return await customer_crud.create_customer(db=db_session, new_customer_data=customer_data)
