@@ -52,3 +52,13 @@ async def test_user(async_client: AsyncClient):
     user = response.json()
     user["password"] = "12345qqQ!"
     return user
+
+
+@pytest.fixture
+async def auth_client(async_client: AsyncClient, test_user: dict):
+    ...
+
+
+@pytest.fixture
+async def test_customer(async_client: AsyncClient):
+    ...
