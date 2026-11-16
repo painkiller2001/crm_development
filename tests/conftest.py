@@ -28,6 +28,22 @@ async def setup_test_db():
         await conn.run_sync(Base.metadata.drop_all)
 
 
+@pytest.fixture
+async def db_session():
+    async with TestingSessionLocal() as session:
+        yield session
+
+
+@pytest.fixture(autouse=True)
+def override_dependency(db_session: AsyncSession):
+    async def override_get_db():
+        yield db_session
+
+    application.dependency_overrides[get_db] = override_get_db
+    yield
+    application.dependency_overrides.clear()
+
+
 BASE_URL = "http://test"
 
 
@@ -66,6 +82,16 @@ async def auth_client(async_client: AsyncClient, test_user: dict):
     yield async_client
     async_client.headers.pop("Authorization", None)
 
-@pytest.fixture
-async def test_customer(async_client: AsyncClient):
-    ...
+
+# @pytest.fixture
+# async def test_customer(async_client: AsyncClient, auth_client: dict):
+#     customer_data = {
+#         "name": "Test LLC",
+#         "phone": "123 563 (324)",
+#         "email": "test_customer@test.com",
+#         "website": "www.testllc.com",
+#         "address": "Test St., Test State",
+#     }
+#     response = await async_client.post("/customers/create", json=customer_data)
+#     customer = response.json()
+#     return customer
