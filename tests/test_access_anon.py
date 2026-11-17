@@ -62,7 +62,6 @@ async def test_create_deal_anon(async_client: AsyncClient):
     assert response.status_code == 401 
 
 
-
 @pytest.mark.asyncio
 async def test_read_deal_anon(async_client: AsyncClient, test_deal):
     deal_id = test_deal.id
@@ -70,9 +69,11 @@ async def test_read_deal_anon(async_client: AsyncClient, test_deal):
     assert response.status_code == 401
 
 
-# @pytest.mark.asyncio
-# async def test_update_deal_anon():
-#     ...
+@pytest.mark.asyncio
+async def test_update_deal_anon(async_client: AsyncClient, test_deal):
+    deal_id = test_deal.id
+    response = await async_client.put(f"/deals/{deal_id}/update")
+    assert response.status_code == 401
 
 
 # @pytest.mark.asyncio
