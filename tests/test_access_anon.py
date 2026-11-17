@@ -76,6 +76,8 @@ async def test_update_deal_anon(async_client: AsyncClient, test_deal):
     assert response.status_code == 401
 
 
-# @pytest.mark.asyncio
-# async def test_delete_deal_anon():
-#     ...
+@pytest.mark.asyncio
+async def test_delete_deal_anon(async_client: AsyncClient, test_deal):
+    deal_id = test_deal.id
+    response = await async_client.delete(f"/deals/{deal_id}/delete")
+    assert response.status_code == 401
