@@ -62,6 +62,7 @@ async def test_create_deal_anon(async_client: AsyncClient):
     assert response.status_code == 401 
 
 
+
 @pytest.mark.asyncio
 async def test_read_deal_anon(async_client: AsyncClient, test_deal):
     deal_id = test_deal.id
