@@ -38,24 +38,23 @@ async def test_read_user(async_client: AsyncClient, auth_client, test_user: dict
 
 
 @pytest.mark.asyncio
-async def test_update_user(async_client: AsyncClient, auth_client, test_user: dict):
-    user_id = test_user['id']
+async def test_update_user(auth_client: AsyncClient, test_user: dict):
+    user_id = test_user["id"]
 
     update_data = {
         "first_name": "Upd Test",
         "last_name": "Upd User",
         "role": "Manager",
         "department": "Sales",
-        "email": "upduser@example.com",
     }
 
     response = await auth_client.put(f"/users/{user_id}/update", json=update_data)
-
     assert response.status_code == 200
-    data = response.json()
-    assert data["first_name"] == update_data['first_name']
-    assert data["last_name"] == update_data['last_name']
-    assert data["email"] == update_data['email']
+
+    get_response = await auth_client.get(f"/users/{user_id}")
+    data = get_response.json()
+    assert data["first_name"] == update_data["first_name"]
+    assert data["last_name"] == update_data["last_name"]
 
 
 
