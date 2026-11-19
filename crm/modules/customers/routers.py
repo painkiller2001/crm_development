@@ -22,7 +22,7 @@ async def get_customers(db: AsyncSession = Depends(get_db)):
     return customers
 
 
-@router.get('/{customer_id}/customer/')
+@router.get('/{customer_id}/')
 async def get_customer(customer_id: int, db: AsyncSession = Depends(get_db)):
     customer = await crud.get_customer(db=db, customer_id=customer_id)
 
