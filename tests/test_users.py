@@ -1,5 +1,7 @@
 import pytest
 from httpx import AsyncClient
+from crm.modules.users import crud
+from sqlalchemy.ext.asyncio import AsyncSession
 
 
 @pytest.mark.asyncio
@@ -58,8 +60,13 @@ async def test_update_user(auth_client: AsyncClient, test_user: dict):
 
 
 
-# @pytest.mark.asyncio
-# async def test_delete_user(async_client: AsyncClient, auth_client, test_user: dict):
-#     user_id = test_user['id']
+@pytest.mark.asyncio
+async def test_delete_user(auth_client, test_user: dict, db_session: AsyncSession):
+    user_id = test_user['id']
 
-#     response = await auth_client.delete(f"/users/{user_id}/delete")
+    response = await auth_client.delete(f"/users/{user_id}/delete")
+
+    assert response.status_code in (200, 204)
+
+    deleted_user = await crud.get_user(db=db_session, user_id=user_id)
+    assert deleted_user is None
