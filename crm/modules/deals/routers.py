@@ -16,7 +16,7 @@ async def create_deal(new_deal_data: DealCreate, db: AsyncSession = Depends(get_
     return new_deal
 
 
-@router.get('/{id}')
+@router.get('/{deal_id}')
 async def get_deal(deal_id: int, db: AsyncSession = Depends(get_db)):
     deal = await crud.get_deal(db=db, deal_id=deal_id)
 
@@ -34,7 +34,7 @@ async def get_deals(db: AsyncSession = Depends(get_db)):
     return deals
 
 
-@router.put('/{id}/update')
+@router.put('/{deal_id}/update')
 async def update_deal(new_deal_data: DealUpdate, deal_id: int, db: AsyncSession = Depends(get_db)):
     deal = await crud.update_deal(new_deal_data=new_deal_data, deal_id=deal_id, db=db)
 
@@ -46,7 +46,7 @@ async def update_deal(new_deal_data: DealUpdate, deal_id: int, db: AsyncSession 
         )
 
 
-@router.delete('/{id}/delete')
+@router.delete('/{deal_id}/delete')
 async def delete_deal(deal_id: int, db: AsyncSession = Depends(get_db)):
     deal = await crud.get_deal(deal_id=deal_id, db=db)
 

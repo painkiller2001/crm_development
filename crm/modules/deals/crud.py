@@ -14,7 +14,7 @@ async def create_deal(new_deal_data: DealCreate, db: AsyncSession) -> DealModel:
 
 
 async def get_deal(deal_id: int, db: AsyncSession) -> DealModel | None:
-    deal = await db.execute(select(DealModel().filter(DealModel.id == deal_id)))
+    deal = await db.execute(select(DealModel).filter(DealModel.id == deal_id))
     return deal.scalars().first()
 
 
@@ -24,7 +24,7 @@ async def get_deals(db: AsyncSession) -> list[DealModel]:
 
 
 async def update_deal(new_deal_data: DealCreate, deal_id: int, db: AsyncSession) -> DealModel | None:
-    deal = await db.execute(select(DealModel().filter(DealModel.id == deal_id)))
+    deal = await db.execute(select(DealModel).filter(DealModel.id == deal_id))
     db_deal = deal.scalars.first()
 
     if not db_deal:
@@ -41,6 +41,6 @@ async def update_deal(new_deal_data: DealCreate, deal_id: int, db: AsyncSession)
 
 
 async def delete_deal(deal_id: int, db: AsyncSession) -> None:
-    deal = await db.execute(select(DealModel().filter(DealModel.id == deal_id)))
+    deal = await db.execute(select(DealModel).filter(DealModel.id == deal_id))
     await db.delete(deal.scalars().first())
     await db.commit()

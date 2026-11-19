@@ -22,7 +22,7 @@ async def get_users(db: AsyncSession = Depends(get_db), current_user = Depends(g
     return users
 
 
-@router.get('/{id}')
+@router.get('/{user_id}')
 async def get_user(user_id: int, db: AsyncSession = Depends(get_db), current_user = Depends(get_current_user)):
     user = await crud.get_user(db=db, user_id=user_id)
 
@@ -34,7 +34,7 @@ async def get_user(user_id: int, db: AsyncSession = Depends(get_db), current_use
         )
 
 
-@router.put('/{id}/update')
+@router.put('/{user_id}/update')
 async def update_user(user_id: int, new_user_data: UserUpdate, db: AsyncSession = Depends(get_db), current_user = Depends(get_current_user)):
     
     updated_user = await crud.update_user(db=db, user_id=user_id, new_user_data=new_user_data)
@@ -47,7 +47,7 @@ async def update_user(user_id: int, new_user_data: UserUpdate, db: AsyncSession 
         )
 
 
-@router.delete('/{id}/delete')
+@router.delete('/{user_id}/delete')
 async def delete_user(user_id: int, db: AsyncSession = Depends(get_db), current_user = Depends(get_current_user)):
     user = await crud.get_user(db=db, user_id=user_id)
 
