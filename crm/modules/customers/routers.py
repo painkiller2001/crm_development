@@ -22,7 +22,7 @@ async def get_customers(db: AsyncSession = Depends(get_db)):
     return customers
 
 
-@router.get('/{id}/customer/')
+@router.get('/{customer_id}/')
 async def get_customer(customer_id: int, db: AsyncSession = Depends(get_db)):
     customer = await crud.get_customer(db=db, customer_id=customer_id)
 
@@ -34,7 +34,7 @@ async def get_customer(customer_id: int, db: AsyncSession = Depends(get_db)):
         )
 
 
-@router.put('/{id}/update/')
+@router.put('/{customer_id}/update/')
 async def update_customer(new_customer_data: CustomerUpdate, customer_id: int, db: AsyncSession = Depends(get_db)):
     updated_customer = await crud.update_customer(db=db, new_customer_data=new_customer_data, customer_id=customer_id)
 
@@ -46,7 +46,7 @@ async def update_customer(new_customer_data: CustomerUpdate, customer_id: int, d
         )
 
 
-@router.delete('/{id}/delete/')
+@router.delete('/{customer_id}/delete/')
 async def delete_customer(customer_id: int, db: AsyncSession = Depends(get_db)):
     customer = await crud.get_customer(customer_id=customer_id, db=db)
 

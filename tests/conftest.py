@@ -96,8 +96,8 @@ async def test_customer(db_session: AsyncSession):
 async def test_deal(db_session: AsyncSession, test_customer, test_user: dict):
     deal_data = DealCreate(
         name="Test deal",
-        customer_id=test_customer.id",
-        responsible_id=test_user["id"]",
+        customer_id=test_customer.id,
+        responsible_id=test_user["id"],
         price="100000",
         stage="Draft",
         description="Test desc for deal",
