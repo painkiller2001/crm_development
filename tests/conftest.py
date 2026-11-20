@@ -3,12 +3,11 @@ from httpx import ASGITransport, AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
 from crm.core.database import Base, get_db
-from main import app as application
 from crm.modules.customers import crud as customer_crud
-from crm.modules.deals import crud as deal_crud
 from crm.modules.customers.schema import CustomerCreate
+from crm.modules.deals import crud as deal_crud
 from crm.modules.deals.schema import DealCreate
-
+from main import app as application
 
 TEST_BASE_URL = "sqlite+aiosqlite:///:memory:"
 engine_test = create_async_engine(TEST_BASE_URL, echo=False)

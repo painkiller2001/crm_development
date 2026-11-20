@@ -1,7 +1,5 @@
 import pytest
 from httpx import AsyncClient
-from crm.modules.customers import crud
-from sqlalchemy.ext.asyncio import AsyncSession
 
 
 @pytest.mark.asyncio
@@ -14,7 +12,7 @@ async def test_create_customer(async_client: AsyncClient, auth_client):
         'address': "Test St., Test State",
     }
 
-    response = await auth_client.post(f'/customers/create/', json=customer_data)
+    response = await auth_client.post('/customers/create/', json=customer_data)
 
     assert response.status_code == 200
     data = response.json()
@@ -44,4 +42,3 @@ async def test_update_customer(async_client: AsyncClient, auth_client, test_cust
 async def test_delete_customer(async_client: AsyncClient, auth_client, test_customer):
     ...
 
-#
