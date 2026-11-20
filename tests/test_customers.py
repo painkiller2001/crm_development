@@ -35,3 +35,5 @@ async def test_update_customer(async_client: AsyncClient, auth_client, test_cust
 @pytest.mark.asyncio
 async def test_delete_customer(async_client: AsyncClient, auth_client, test_customer):
     ...
+
+#
