@@ -1,6 +1,5 @@
 import pytest
 from httpx import AsyncClient
-from crm.modules.deals import crud
 
 
 @pytest.mark.asyncio
