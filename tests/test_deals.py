@@ -5,17 +5,22 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 
 @pytest.mark.asyncio
-async def test_create_deal(async_client: AsyncClient, auth_client, test_deal, test_user):
+async def test_create_deal(async_client: AsyncClient, auth_client, test_user, test_customer):
     deal_data = {
-        ...
+        "name": "Test deal",
+        "customer_id": test_customer.id,
+        "responsible_id": test_user["id"],
+        "price": "100000",
+        "stage": "Draft",
+        "description": "Test desc for deal",
     }
 
     response = await auth_client.post(f'/deals/create/', json=deal_data)
 
     assert response.status_code == 200
     data = response.json()
-    assert data[...] == deal_data[...]
-    assert data[...] == deal_data[...]
+    assert data['name'] == deal_data['name']
+    assert data['responsible_id'] == deal_data['responsible_id']
 
 
 
@@ -36,7 +41,12 @@ async def test_update_deal(async_client: AsyncClient, auth_client, test_deal):
     deal_id = test_deal.id
 
     update_data = {
-        ...
+        name="Test deal",
+        customer_id=test_customer.id,
+        responsible_id=test_user["id"],
+        price="100000",
+        stage="Draft",
+        description="Test desc for deal",
     }
 
     response = await auth_client.put(f'/deals/{deal_id}/update/', json=update_data)
