@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 
 @pytest.mark.asyncio
-async def test_create_deal(async_client: AsyncClient, auth_client, test_customer, test_user):
+async def test_create_deal(async_client: AsyncClient, auth_client, test_deal, test_user):
     deal_data = {
         ...
     }
@@ -51,4 +51,11 @@ async def test_update_deal(async_client: AsyncClient, auth_client, test_deal):
 
 @pytest.mark.asyncio
 async def test_delete_deal(db_session: AsyncSession, async_client: AsyncClient, auth_client, test_deal):
-    ...
+    deal_id = test_deal.id
+
+    response = await auth_client.delete(f'/deals/{deal_id}/delete/')
+
+    assert response.status_code in (200, 204)
+
+    deleted_deal = await crud.get_deal(db=db_session, deal_id=deal_id)
+    assert deleted_deal is None
