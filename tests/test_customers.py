@@ -26,12 +26,12 @@ async def test_create_customer(async_client: AsyncClient, auth_client):
 async def test_read_customer(async_client: AsyncClient, auth_client, test_customer):
     customer_id = test_customer.id
 
-    response = await auth_client.get(f'/customers/{customer_id}')
+    response = await auth_client.get(f'/customers/{customer_id}/')
 
     assert response.status_code == 200
     data = response.json()
-    assert data["name"] == test_customer["name"]
-    assert data["email"] == test_customer["email"]
+    assert data["name"] == test_customer.name
+    assert data["email"] == test_customer.email
     
 
 
@@ -47,11 +47,11 @@ async def test_update_customer(async_client: AsyncClient, auth_client, test_cust
         'address': "upd_Test St., Test State",
     }
 
-    response = await auth_client.put(f'/customers/{customer_id}/update/')
+    # response = await auth_client.put(f'/customers/{customer_id}/update/', json=update_data)
 
     assert response.status_code == 200
 
-    get_response = await auth_client.get(f"/users/{customer_id}")
+    get_response = await auth_client.get(f"/customers/{customer_id}")
     data = get_response.json()
     assert data['name'] == update_data['name']
     assert data["website"] == update_data["website"]
