@@ -58,7 +58,12 @@ async def test_update_customer(async_client: AsyncClient, auth_client, test_cust
 
 
 @pytest.mark.asyncio
-async def test_delete_customer(async_client: AsyncClient, auth_client, test_customer):
-    ...
+async def test_delete_customer(db_session: AsyncSession, async_client: AsyncClient, auth_client, test_customer):
+    customer_id = test_customer.id
 
-#
+    response = await auth_client.delete(f'/customers/{customer_id}/delete/')
+
+    assert response.status_code in (200, 204)
+
+    deleted_customer = await crud.get_customer(db=db_session, customer_id=customer_id)
+    assert deleted_customer is None
