@@ -6,7 +6,17 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 @pytest.mark.asyncio
 async def test_create_deal(async_client: AsyncClient, auth_client, test_customer, test_user):
-    ...   
+    deal_data = {
+        ...
+    }
+
+    response = await auth_client.post(f'/deals/create/', json=deal_data)
+
+    assert response.status_code == 200
+    data = response.json()
+    assert data[...] == deal_data[...]
+    assert data[...] == deal_data[...]
+
 
 
 @pytest.mark.asyncio
