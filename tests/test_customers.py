@@ -37,7 +37,24 @@ async def test_read_customer(async_client: AsyncClient, auth_client, test_custom
 
 @pytest.mark.asyncio
 async def test_update_customer(async_client: AsyncClient, auth_client, test_customer):
-    ...
+    customer_id = test_customer.id
+
+    update_data = {
+        'name': "Upd Test LLC",
+        'phone': "Upd 123 563 (324)",
+        'email': "upd_test_customer@test.com",
+        'website': "upd_testcustomer.com",
+        'address': "upd_Test St., Test State",
+    }
+
+    response = await auth_client.put(f'/customers/{customer_id}/update/')
+
+    assert response.status_code == 200
+
+    get_response = await auth_client.get(f"/users/{customer_id}")
+    data = get_response.json()
+    assert data['name'] == update_data['name']
+    assert data["website"] == update_data["website"]
 
 
 @pytest.mark.asyncio
