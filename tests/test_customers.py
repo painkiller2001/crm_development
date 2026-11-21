@@ -47,7 +47,7 @@ async def test_update_customer(async_client: AsyncClient, auth_client, test_cust
         'address': "upd_Test St., Test State",
     }
 
-    # response = await auth_client.put(f'/customers/{customer_id}/update/', json=update_data)
+    response = await auth_client.put(f'/customers/{customer_id}/update/', json=update_data)
 
     assert response.status_code == 200
 
