@@ -4,7 +4,7 @@ from httpx import AsyncClient
 
 @pytest.mark.asyncio
 async def test_read_users_anon(async_client: AsyncClient):
-    response = await async_client.get("/users/")
+    response = await async_client.get("/users")
     assert response.status_code == 401 
 
 
@@ -31,34 +31,34 @@ async def test_delete_user_anon(async_client: AsyncClient, test_user: dict):
 
 @pytest.mark.asyncio
 async def test_create_customer_anon(async_client: AsyncClient):
-    response = await async_client.post("/customers/create/")
+    response = await async_client.post("/customers/create")
     assert response.status_code == 401 
 
 
 @pytest.mark.asyncio
 async def test_read_customer_anon(async_client: AsyncClient, test_customer: dict):
     customer_id = test_customer.id
-    response = await async_client.get(f"/customers/{customer_id}/")
+    response = await async_client.get(f"/customers/{customer_id}")
     assert response.status_code == 401
 
 
 @pytest.mark.asyncio
 async def test_update_customer_anon(async_client: AsyncClient, test_customer: dict):
     customer_id = test_customer.id
-    response = await async_client.put(f"/customers/{customer_id}/update/")
+    response = await async_client.put(f"/customers/{customer_id}/update")
     assert response.status_code == 401
 
 
 @pytest.mark.asyncio
 async def test_delete_customer_anon(async_client: AsyncClient, test_customer: dict):
     customer_id = test_customer.id
-    response = await async_client.delete(f"/customers/{customer_id}/delete/")
+    response = await async_client.delete(f"/customers/{customer_id}/delete")
     assert response.status_code == 401
 
 
 @pytest.mark.asyncio
 async def test_create_deal_anon(async_client: AsyncClient):
-    response = await async_client.get("/deals/")
+    response = await async_client.get("/deals")
     assert response.status_code == 401 
 
 
