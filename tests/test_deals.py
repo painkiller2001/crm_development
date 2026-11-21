@@ -33,9 +33,22 @@ async def test_read_deal(async_client: AsyncClient, auth_client, test_deal):
 
 @pytest.mark.asyncio
 async def test_update_deal(async_client: AsyncClient, auth_client, test_deal):
-    ...
+    deal_id = test_deal.id
+
+    update_data = {
+        ...
+    }
+
+    response = await auth_client.put(f'/deals/{deal_id}/update/', json=update_data)
+
+    assert response.status_code == 200
+
+    get_response = await auth_client.get(f"/deals/{deal_id}")
+    data = get_response.json()
+    assert data[] == update_data[]
+    assert data[] == update_data[]
 
 
 @pytest.mark.asyncio
-async def test_delete_deal(db_session: AsyncSession, sasync_client: AsyncClient, auth_client, test_deal):
+async def test_delete_deal(db_session: AsyncSession, async_client: AsyncClient, auth_client, test_deal):
     ...
