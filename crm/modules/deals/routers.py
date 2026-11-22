@@ -28,7 +28,7 @@ async def get_deal(deal_id: int, db: AsyncSession = Depends(get_db)):
         )
 
 
-@router.get('/')
+@router.get('')
 async def get_deals(db: AsyncSession = Depends(get_db)):
     deals = await crud.get_deals(db=db)
     return deals
