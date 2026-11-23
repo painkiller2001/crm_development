@@ -51,7 +51,7 @@ async def delete_deal(deal_id: int, db: AsyncSession = Depends(get_db)):
     deal = await crud.get_deal(deal_id=deal_id, db=db)
 
     if deal:
-        await crud.delete_user(db=db, deal_id=deal_id)
+        await crud.delete_deal(db=db, deal_id=deal_id)
         return
     else:
         raise HTTPException(
