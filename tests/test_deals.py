@@ -1,10 +1,7 @@
 import pytest
 from httpx import AsyncClient
-# <<<<<<< feature/tests
-# from crm.modules.deals import crud
-# from sqlalchemy.ext.asyncio import AsyncSession
-# =======
-# >>>>>>> main
+from crm.modules.deals import crud
+from sqlalchemy.ext.asyncio import AsyncSession
 
 
 @pytest.mark.asyncio
@@ -39,27 +36,27 @@ async def test_read_deal(async_client: AsyncClient, auth_client, test_deal):
     assert data["email"] == test_deal.email
 
 
-@pytest.mark.asyncio
-async def test_update_deal(async_client: AsyncClient, auth_client, test_deal):
-    deal_id = test_deal.id
+# @pytest.mark.asyncio
+# async def test_update_deal(async_client: AsyncClient, auth_client, test_deal):
+#     deal_id = test_deal.id
 
-    update_data = {
-        name="Test deal",
-        customer_id=test_customer.id,
-        responsible_id=test_user["id"],
-        price="100000",
-        stage="Draft",
-        description="Test desc for deal",
-    }
+#     update_data = {
+#         name="Test deal",
+#         customer_id=test_customer.id,
+#         responsible_id=test_user["id"],
+#         price="100000",
+#         stage="Draft",
+#         description="Test desc for deal",
+#     }
 
-    response = await auth_client.put(f'/deals/{deal_id}/update/', json=update_data)
+#     response = await auth_client.put(f'/deals/{deal_id}/update/', json=update_data)
 
-    assert response.status_code == 200
+#     assert response.status_code == 200
 
-    get_response = await auth_client.get(f"/deals/{deal_id}")
-    data = get_response.json()
-    assert data[] == update_data[]
-    assert data[] == update_data[]
+#     get_response = await auth_client.get(f"/deals/{deal_id}")
+#     data = get_response.json()
+#     assert data[] == update_data[]
+#     assert data[] == update_data[]
 
 
 @pytest.mark.asyncio
