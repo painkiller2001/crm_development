@@ -5,12 +5,12 @@ from crm.core.database import get_db
 from crm.core.security import get_current_user
 from crm.modules.users import crud
 
-from .schema import UserCreate, UserUpdate
+from .schema import UserCreate, UserUpdate, UserRead
 
 router = APIRouter(prefix='/users', tags=["Users"])
 
 
-@router.post('/create')
+@router.post('/create', response_model=UserRead)
 async def create_user(new_user_data: UserCreate, db: AsyncSession = Depends(get_db)):
     new_user = await crud.create_user(db=db, new_user_data=new_user_data)
     return new_user
