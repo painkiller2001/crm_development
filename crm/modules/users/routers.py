@@ -16,7 +16,7 @@ async def create_user(new_user_data: UserCreate, db: AsyncSession = Depends(get_
     return new_user
 
 
-@router.get('/')
+@router.get('')
 async def get_users(db: AsyncSession = Depends(get_db), current_user = Depends(get_current_user)):
     users = await crud.get_users(db=db)
     return users

@@ -10,19 +10,19 @@ from .schema import CustomerCreate, CustomerUpdate
 router = APIRouter(prefix='/customers', tags=["Customers"], dependencies=[Depends(get_current_user)])
 
 
-@router.post('/create/')
+@router.post('/create')
 async def create_customer(new_customer_data: CustomerCreate, db: AsyncSession = Depends(get_db)):
     new_customer = await crud.create_customer(db=db, new_customer_data=new_customer_data)
     return new_customer
 
 
-@router.get('/')
+@router.get('')
 async def get_customers(db: AsyncSession = Depends(get_db)):
     customers = await crud.get_customers(db=db)
     return customers
 
 
-@router.get('/{customer_id}/')
+@router.get('/{customer_id}')
 async def get_customer(customer_id: int, db: AsyncSession = Depends(get_db)):
     customer = await crud.get_customer(db=db, customer_id=customer_id)
 
@@ -34,7 +34,7 @@ async def get_customer(customer_id: int, db: AsyncSession = Depends(get_db)):
         )
 
 
-@router.put('/{customer_id}/update/')
+@router.put('/{customer_id}/update')
 async def update_customer(new_customer_data: CustomerUpdate, customer_id: int, db: AsyncSession = Depends(get_db)):
     updated_customer = await crud.update_customer(db=db, new_customer_data=new_customer_data, customer_id=customer_id)
 
@@ -46,7 +46,7 @@ async def update_customer(new_customer_data: CustomerUpdate, customer_id: int, d
         )
 
 
-@router.delete('/{customer_id}/delete/')
+@router.delete('/{customer_id}/delete')
 async def delete_customer(customer_id: int, db: AsyncSession = Depends(get_db)):
     customer = await crud.get_customer(customer_id=customer_id, db=db)
 
