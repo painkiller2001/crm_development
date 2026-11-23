@@ -33,7 +33,10 @@ async def test_read_deal(async_client: AsyncClient, auth_client, test_deal):
     assert response.status_code == 200
     data = response.json()
     assert data["name"] == test_deal.name
-    assert data["email"] == test_deal.email
+    assert data["customer_id"] == test_deal.customer_id
+    assert data["responsible_id"] == test_deal.responsible_id
+    assert data["price"] == test_deal.price
+    assert data["description"] == test_deal.description
 
 
 # @pytest.mark.asyncio
