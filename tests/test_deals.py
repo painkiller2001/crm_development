@@ -1,7 +1,10 @@
 import pytest
 from httpx import AsyncClient
-from crm.modules.deals import crud
-from sqlalchemy.ext.asyncio import AsyncSession
+# <<<<<<< feature/tests
+# from crm.modules.deals import crud
+# from sqlalchemy.ext.asyncio import AsyncSession
+# =======
+# >>>>>>> main
 
 
 @pytest.mark.asyncio
