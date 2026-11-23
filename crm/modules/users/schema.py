@@ -15,6 +15,11 @@ class UserCreate(UserBase):
 
 class UserRead(UserBase):
     id: int
+    first_name: str
+    last_name: str
+    role: str
+    department: str
+    email: EmailStr
     model_config = ConfigDict(from_attributes=True)
 
 
