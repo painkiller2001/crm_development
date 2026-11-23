@@ -15,7 +15,7 @@ async def test_create_deal(async_client: AsyncClient, auth_client, test_user, te
         "description": "Test desc for deal",
     }
 
-    response = await auth_client.post(f'/deals/create/', json=deal_data)
+    response = await auth_client.post(f'/deals/create', json=deal_data)
 
     assert response.status_code == 200
     data = response.json()
@@ -28,7 +28,7 @@ async def test_create_deal(async_client: AsyncClient, auth_client, test_user, te
 async def test_read_deal(async_client: AsyncClient, auth_client, test_deal):
     deal_id = test_deal.id
 
-    response = await auth_client.get(f'/deals/{deal_id}/')
+    response = await auth_client.get(f'/deals/{deal_id}')
 
     assert response.status_code == 200
     data = response.json()
@@ -63,7 +63,7 @@ async def test_read_deal(async_client: AsyncClient, auth_client, test_deal):
 async def test_delete_deal(db_session: AsyncSession, async_client: AsyncClient, auth_client, test_deal):
     deal_id = test_deal.id
 
-    response = await auth_client.delete(f'/deals/{deal_id}/delete/')
+    response = await auth_client.delete(f'/deals/{deal_id}/delete')
 
     assert response.status_code in (200, 204)
 
