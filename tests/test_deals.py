@@ -39,27 +39,30 @@ async def test_read_deal(async_client: AsyncClient, auth_client, test_deal):
     assert data["description"] == test_deal.description
 
 
-# @pytest.mark.asyncio
-# async def test_update_deal(async_client: AsyncClient, auth_client, test_deal):
-#     deal_id = test_deal.id
+@pytest.mark.asyncio
+async def test_update_deal(auth_client, test_deal):
+    deal_id = test_deal.id
 
-#     update_data = {
-#         name="Test deal",
-#         customer_id=test_customer.id,
-#         responsible_id=test_user["id"],
-#         price="100000",
-#         stage="Draft",
-#         description="Test desc for deal",
-#     }
+    update_data = {
+        "name": "Updated test deal",
+        "customer_id": test_deal.customer_id,
+        "responsible_id": test_deal.responsible_id,
+        "price": "250000",
+        "stage": "In Progress",
+        "description": "Updated desc for deal",
+    }
 
-#     response = await auth_client.put(f'/deals/{deal_id}/update/', json=update_data)
+    response = await auth_client.put(f"/deals/{deal_id}/update", json=update_data)
 
-#     assert response.status_code == 200
+    assert response.status_code == 200
 
-#     get_response = await auth_client.get(f"/deals/{deal_id}")
-#     data = get_response.json()
-#     assert data[] == update_data[]
-#     assert data[] == update_data[]
+    get_response = await auth_client.get(f"/deals/{deal_id}")
+    assert get_response.status_code == 200
+    data = get_response.json()
+    assert data["name"] == update_data["name"]
+    assert str(data["price"]) == update_data["price"]
+    assert data["stage"] == update_data["stage"]
+    assert data["description"] == update_data["description"]
 
 
 @pytest.mark.asyncio
