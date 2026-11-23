@@ -1,5 +1,7 @@
 import pytest
 from httpx import AsyncClient
+from sqlalchemy.ext.asyncio import AsyncSession
+from crm.modules.customers import crud
 
 
 @pytest.mark.asyncio
@@ -63,8 +65,5 @@ async def test_delete_customer(db_session: AsyncSession, async_client: AsyncClie
 
     assert response.status_code in (200, 204)
 
-# <<<<<<< feature/tests
-#     deleted_customer = await crud.get_customer(db=db_session, customer_id=customer_id)
-#     assert deleted_customer is None
-# =======
-# >>>>>>> main
+    deleted_customer = await crud.get_customer(db=db_session, customer_id=customer_id)
+    assert deleted_customer is None
