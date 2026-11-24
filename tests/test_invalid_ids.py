@@ -2,7 +2,7 @@ import pytest
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize(("method", "url", "payload"),
+@pytest.mark.parametrize(("method", "url", "object_data"),
     [
         #Users
         ("GET", "/users/99999", None),
@@ -23,6 +23,22 @@ import pytest
             },
         ),
         ("DELETE", "/customers/99999/delete", None),
+                
+        # Deals
+        ("GET", "/deals/99999", None),
+        (
+            "PUT",
+            "/deals/99999/update",
+            {
+                "name": "Ghost Deal",
+                "customer_id": 1,
+                "responsible_id": 1,
+                "price": "1000",
+                "stage": "Draft",
+                "description": "Ghost",
+            },
+        ),
+        ("DELETE", "/deals/99999/delete", None),
     ],)
 async def test_entity_not_found(auth_client, method: str, url: str, object_data: dict | None):
     response = await auth_client.request(method=method, url=url, json=object_data)
