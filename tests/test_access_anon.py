@@ -68,6 +68,11 @@ async def test_create_deal_anon(async_client: AsyncClient):
 
 
 @pytest.mark.asyncio
+async def test_read_deals_anon(assync_client: AsyncClient, test_deal):
+    ...
+    
+
+@pytest.mark.asyncio
 async def test_read_deal_anon(async_client: AsyncClient, test_deal):
     deal_id = test_deal.id
     response = await async_client.get(f"/deals/{deal_id}")
