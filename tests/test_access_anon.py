@@ -36,6 +36,11 @@ async def test_create_customer_anon(async_client: AsyncClient):
 
 
 @pytest.mark.asyncio
+async def test_read_customers_anon(async_client: AsyncClient, test_customer: dict):
+    ...
+
+
+@pytest.mark.asyncio
 async def test_read_customer_anon(async_client: AsyncClient, test_customer: dict):
     customer_id = test_customer.id
     response = await async_client.get(f"/customers/{customer_id}")
