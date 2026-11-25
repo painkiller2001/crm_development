@@ -49,6 +49,7 @@ async def test_read_users(async_client: AsyncClient, auth_client, test_user: dic
     emails = [user["email"] for user in data]
     assert test_user["email"] in emails
     assert user_data2["email"] in emails
+    assert all("password" not in user and "hashed_password" not in user for user in data)
 
 
 @pytest.mark.asyncio
