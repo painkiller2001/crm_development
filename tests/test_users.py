@@ -42,7 +42,7 @@ async def test_read_users(async_client: AsyncClient, auth_client, test_user: dic
     create_response = await auth_client.post("/users/create", json=user_data2)
     assert create_response.status_code in (200, 201)
 
-    response = await async_client.get("/users")
+    response = await auth_client.get("/users")
 
     assert response.status_code == 200
     data = response.json()
