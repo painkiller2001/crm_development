@@ -28,6 +28,11 @@ async def test_create_user(async_client: AsyncClient):
 
 
 @pytest.mark.asyncio
+async def test_read_users(async_client: AsyncClient, auth_client, test_user: dict):
+    ...
+
+
+@pytest.mark.asyncio
 async def test_read_user(async_client: AsyncClient, auth_client, test_user: dict):
     user_id = test_user['id']
 
