@@ -23,6 +23,11 @@ async def test_create_customer(async_client: AsyncClient, auth_client):
 
 
 @pytest.mark.asyncio
+async def test_read_customers(async_client: AsyncClient, auth_client, test_customer):
+    ...
+
+
+@pytest.mark.asyncio
 async def test_read_customer(async_client: AsyncClient, auth_client, test_customer):
     customer_id = test_customer.id
 
@@ -32,7 +37,6 @@ async def test_read_customer(async_client: AsyncClient, auth_client, test_custom
     data = response.json()
     assert data["name"] == test_customer.name
     assert data["email"] == test_customer.email
-    
 
 
 @pytest.mark.asyncio
