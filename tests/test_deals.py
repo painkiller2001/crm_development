@@ -23,6 +23,11 @@ async def test_create_deal(async_client: AsyncClient, auth_client, test_user, te
     assert data['responsible_id'] == deal_data['responsible_id']
 
 
+@pytest.mark.asyncio
+async def test_read_deals(auth_client, test_deal):
+    ...
+
+
 
 @pytest.mark.asyncio
 async def test_read_deal(async_client: AsyncClient, auth_client, test_deal):
