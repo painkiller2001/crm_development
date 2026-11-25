@@ -29,7 +29,26 @@ async def test_create_user(async_client: AsyncClient):
 
 @pytest.mark.asyncio
 async def test_read_users(async_client: AsyncClient, auth_client, test_user: dict):
-    ...
+    
+    user_data2 = {
+        "first_name": "Test2",
+        "last_name": "User2",
+        "role": "Manager",
+        "department": "Sales",
+        "email": "user2@example.com",
+        "password": "12345qqQ!"
+    }
+
+    create_response = await auth_client.post("/users/create", json=user_data2)
+    assert create_response.status_code in (200, 201)
+
+    response = await async_client.get("/users")
+
+    assert response.status_code == 200
+    data = response.json()
+    emails = [user["email"] for user in data]
+    assert test_user["email"] in emails
+    assert user_data2["email"] in emails
 
 
 @pytest.mark.asyncio
