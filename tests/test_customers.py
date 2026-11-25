@@ -23,6 +23,28 @@ async def test_create_customer(async_client: AsyncClient, auth_client):
 
 
 @pytest.mark.asyncio
+async def test_read_customers(async_client: AsyncClient, auth_client, test_customer):
+    customer_data2 = {
+        'name': "Test LLC2",
+        'phone': "123 563 (324)2",
+        'email': "test_customer2@test.com",
+        'website': "testcustomer2.com",
+        'address': "Test St., Test State2",
+    }
+
+    create_response = await auth_client.post("/customers/create", json=customer_data2)
+    assert create_response.status_code in (200, 201)
+
+    response = await auth_client.get("/customers")
+
+    assert response.status_code == 200
+    data = response.json()
+    emails = [customer["email"] for customer in data]
+    assert test_customer.email in emails
+    assert customer_data2["email"] in emails
+
+
+@pytest.mark.asyncio
 async def test_read_customer(async_client: AsyncClient, auth_client, test_customer):
     customer_id = test_customer.id
 
@@ -32,7 +54,6 @@ async def test_read_customer(async_client: AsyncClient, auth_client, test_custom
     data = response.json()
     assert data["name"] == test_customer.name
     assert data["email"] == test_customer.email
-    
 
 
 @pytest.mark.asyncio
