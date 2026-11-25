@@ -24,9 +24,26 @@ async def test_create_deal(async_client: AsyncClient, auth_client, test_user, te
 
 
 @pytest.mark.asyncio
-async def test_read_deals(auth_client, test_deal):
-    ...
+async def test_read_deals(auth_client, test_deal, test_customer, test_user: dict):
+    deal_data2 = {
+        "name": "Test deal2",
+        "customer_id": test_customer.id,
+        "responsible_id": test_user["id"],
+        "price": "1000002",
+        "stage": "Draft",
+        "description": "Test desc for deal2",
+    }
 
+    create_response = await auth_client.post(f'/deals/create', json=deal_data2)
+    assert create_response.status_code in (200, 201)
+
+    response = await auth_client.get("/deals")
+
+    assert response.status_code == 200
+    data = response.json()
+    ids = [deal["id"] for deal in data]
+    assert test_deal.id in ids
+    assert create_response.json()["id"] in ids
 
 
 @pytest.mark.asyncio
